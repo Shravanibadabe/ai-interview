@@ -6,14 +6,17 @@ import * as faceapi from "face-api.js"
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition"
-import { useParams } from "next/navigation"
+import { useParams, useSearchParams } from "next/navigation" // ✅ ADDED
 import { Button } from "@/components/ui/button"
 import { Mic, Lightbulb, Volume2 } from "lucide-react"
 
 export default function StartInterview() {
   const webcamRef = useRef<Webcam>(null)
   const params = useParams()
+  const searchParams = useSearchParams() // ✅ NEW
+
   const mockId = params?.mockId as string
+  const questionIndexParam = searchParams.get("questionIndex") // ✅ NEW
 
   const [questions, setQuestions] = useState<any[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -23,19 +26,18 @@ export default function StartInterview() {
 
   const [confidence, setConfidence] = useState(70)
 
-  // ✅ FINAL ANSWER STORAGE
   const [finalAnswer, setFinalAnswer] = useState("")
 
   const { transcript, resetTranscript } = useSpeechRecognition()
 
-  // ✅ FIX: always keep latest transcript
+  // ✅ KEEP TRANSCRIPT UPDATED
   useEffect(() => {
     if (transcript && transcript.length > 0) {
       setFinalAnswer(transcript)
     }
   }, [transcript])
 
-  // FETCH QUESTIONS
+  // ✅ FETCH QUESTIONS
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/get-interview", {
@@ -54,6 +56,20 @@ export default function StartInterview() {
 
     if (mockId) fetchData()
   }, [mockId])
+
+  // ✅ 🔥 FIXED: WAIT FOR QUESTIONS THEN SET INDEX
+  useEffect(() => {
+    if (
+      questionIndexParam !== null &&
+      questions.length > 0
+    ) {
+      const index = Number(questionIndexParam)
+
+      if (!isNaN(index) && index < questions.length) {
+        setCurrentIndex(index)
+      }
+    }
+  }, [questionIndexParam, questions])
 
   // FACE MODEL
   useEffect(() => {
@@ -114,7 +130,7 @@ export default function StartInterview() {
     window.speechSynthesis.speak(speech)
   }
 
-  // ✅ SAVE (FIXED LOGIC ONLY)
+  // ✅ SAVE ANSWER (UNCHANGED)
   const saveAnswer = async () => {
     let answer = finalAnswer.trim()
 
@@ -130,7 +146,6 @@ export default function StartInterview() {
     setIsSaving(true)
 
     try {
-      // ✅ CALL GEMINI (ONLY FOR CORRECTION + SCORE)
       const evalRes = await fetch("/api/evaluate-answer", {
         method: "POST",
         headers: {
@@ -138,28 +153,23 @@ export default function StartInterview() {
         },
         body: JSON.stringify({
           question: currentQ.question,
-          userAnswer: answer, // 🔥 ORIGINAL USER VOICE
+          userAnswer: answer,
           correctAnswer: currentQ.answer,
         }),
       })
 
       const evalData = await evalRes.json()
 
-      console.log("🤖 GEMINI:", evalData)
-
-      // ✅ VERY IMPORTANT FIX
-      // Never allow Gemini to replace answer fully
       let finalText = answer
 
       if (
         evalData.correctedAnswer &&
         evalData.correctedAnswer.length > 3 &&
-        evalData.correctedAnswer !== currentQ.answer // ❗ prevent copying correct answer
+        evalData.correctedAnswer !== currentQ.answer
       ) {
         finalText = evalData.correctedAnswer
       }
 
-      // ✅ SAVE
       const res = await fetch("/api/save-answer", {
         method: "POST",
         headers: {
@@ -169,7 +179,7 @@ export default function StartInterview() {
           mockId,
           question: currentQ.question,
           correctAnswer: currentQ.answer,
-          userAnswer: finalText, // ✅ YOUR ANSWER (corrected)
+          userAnswer: finalText,
           confidence,
           mlScore: evalData.score,
           feedback: evalData.feedback,
@@ -216,7 +226,6 @@ export default function StartInterview() {
 
         {/* LEFT */}
         <div className="flex flex-col justify-between">
-
           <div>
             <h2 className="text-xl font-bold">
               {questions[currentIndex]?.question}
@@ -228,7 +237,6 @@ export default function StartInterview() {
             />
           </div>
 
-          {/* NOTE (UNCHANGED) */}
           <div className="mt-10 bg-blue-50 border p-5 rounded-xl flex gap-3">
             <Lightbulb className="text-purple-600" />
             <div>

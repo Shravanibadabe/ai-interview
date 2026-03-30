@@ -36,21 +36,7 @@ export default function InterviewSetupPage() {
   return (
     <div className="min-h-screen bg-gray-50">
 
-      {/* HEADER */}
-      <div className="flex items-center justify-between px-8 py-4 bg-white shadow-sm">
-        <h2 className="font-bold text-xl text-purple-600">AI Interview</h2>
-
-        <div className="hidden md:flex gap-8 text-gray-600">
-          <p className="hover:text-purple-600 cursor-pointer">Dashboard</p>
-          <p className="hover:text-purple-600 cursor-pointer">Questions</p>
-          <p className="hover:text-purple-600 cursor-pointer">Upgrade</p>
-          <p className="hover:text-purple-600 cursor-pointer">How it Works?</p>
-        </div>
-
-        <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-          G
-        </div>
-      </div>
+      
 
       {/* MAIN */}
       <div className="p-10 max-w-6xl mx-auto">
@@ -104,13 +90,24 @@ export default function InterviewSetupPage() {
         {/* START BUTTON */}
         <div className="flex justify-end mt-10">
           <Button
-            className="bg-purple-600 hover:bg-purple-700 px-6 py-2 text-white"
-            onClick={() =>
-              router.push(`/dashboard/interview/${mockId}/start`)
-            }
-          >
-            Start Interview
-          </Button>
+  className="bg-purple-600 hover:bg-purple-700 px-6 py-2 text-white"
+  onClick={() => {
+    const coins = Number(localStorage.getItem("coins") || 20)
+
+    if (coins < 5) {
+      alert("❌ Not enough coins. Please upgrade.")
+      router.push("/dashboard/upgrade")
+      return
+    }
+
+    // ✅ Deduct coins
+    localStorage.setItem("coins", String(coins - 5))
+
+    router.push(`/dashboard/interview/${mockId}/start`)
+  }}
+>
+  Start Interview (5 coins)
+</Button>
         </div>
 
       </div>

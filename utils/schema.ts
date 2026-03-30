@@ -40,3 +40,12 @@ export const UserAnswer = pgTable("userAnswer", {
 
   createdAt: timestamp("createdAt").defaultNow(),
 })
+
+export const User = pgTable("user", {
+  id: serial("id").primaryKey(),
+
+  clerkId: text("clerkId"), // from Clerk
+  coins: integer("coins").default(20),
+
+  createdAt: timestamp("createdAt").defaultNow(),
+})

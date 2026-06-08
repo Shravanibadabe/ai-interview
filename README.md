@@ -1,181 +1,382 @@
-
 # 🎤 AI Interview Mocker
 
-An AI-powered mock interview platform that simulates real interview scenarios using voice, facial expression analysis, and intelligent feedback.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-purple?style=for-the-badge)](https://ai-interview-black-one.vercel.app/dashboard)
+
+An AI-powered mock interview platform that simulates real interview scenarios using Artificial Intelligence, Voice Recognition, Facial Expression Analysis, and Automated Feedback Generation.
+
+---
+
+## 🌐 Live Demo
+
+🚀 **Try the Application**
+
+https://ai-interview-black-one.vercel.app/dashboard
+
+### Demo Access
+
+* Sign up using your email account
+* New users receive **20 free coins**
+* Each interview attempt costs **5 coins**
+* Complete interviews and receive AI-generated feedback
 
 ---
 
 ## 🚀 Overview
 
-AI Interview Mocker helps users practice interviews by:
-- Generating interview questions using AI
-- Recording voice answers
-- Analyzing facial expressions via webcam
-- Providing AI-based feedback and scoring
+AI Interview Mocker is designed to help students, freshers, and job seekers improve their interview performance through realistic AI-powered mock interviews.
 
-It improves both **technical knowledge** and **confidence skills**.
+The platform generates interview questions using AI, records spoken answers, analyzes facial expressions through webcam input, and provides detailed feedback with performance scores.
 
 ---
 
 ## ✨ Features
 
-- 🤖 AI-generated interview questions (Gemini API)
-- 🎤 Voice-based answer recording (Speech Recognition)
-- 📸 Real-time face analysis (confidence detection)
-- 📊 AI evaluation with score & feedback
-- 💰 Coin-based system for interview attempts
-- 🔐 Authentication using Clerk
-- 📁 Previous interview tracking & feedback history
+### 🤖 AI-Powered Question Generation
+
+* Generates interview questions based on selected job role and experience level
+* Dynamic question creation using Gemini AI
+
+### 🎤 Voice-Based Answer Recording
+
+* Users answer questions verbally
+* Speech converted to text using Web Speech API
+
+### 📸 Facial Confidence Analysis
+
+* Real-time webcam monitoring
+* Face detection using Face API
+* Confidence estimation through facial expressions
+
+### 📊 Intelligent Evaluation
+
+* AI evaluates user responses
+* Generates scores and constructive feedback
+* Suggests improvements for better interview performance
+
+### 💰 Coin-Based Interview System
+
+* New users receive 20 coins
+* Every interview attempt costs 5 coins
+* Upgrade system for additional interview attempts
+
+### 🔐 Secure Authentication
+
+* User authentication and management using Clerk
+* Secure login and registration
+
+### 📁 Interview History
+
+* Stores previous interviews
+* Allows users to review past performance
+* Access feedback anytime
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- Next.js (App Router)
-- React.js
-- Tailwind CSS
-- ShadCN UI
+
+* Next.js 15 (App Router)
+* React.js
+* TypeScript
+* Tailwind CSS
+* ShadCN UI
 
 ### Backend
-- Next.js API Routes
-- Gemini AI API (for questions & evaluation)
+
+* Next.js API Routes
+* Server Actions
 
 ### Database
-- Neon Database (PostgreSQL)
-- Drizzle ORM
 
-### AI & ML
-- face-api.js (facial expression detection)
-- react-speech-recognition (voice input)
+* Neon Database
+* PostgreSQL
+* Drizzle ORM
+
+### Artificial Intelligence
+
+* Gemini AI API
+* Face API
+* Web Speech API
 
 ### Authentication
-- Clerk
+
+* Clerk Authentication
+
+### Deployment
+
+* Vercel
 
 ---
 
-## 🧠 How It Works
+## 🧠 System Workflow
 
-1. User logs in using Clerk authentication  
-2. Creates a mock interview  
-3. AI generates questions using Gemini API  
-4. User answers using voice  
-5. Webcam analyzes facial expressions  
-6. AI evaluates answers and gives:
-   - Score
-   - Feedback
-   - Confidence level  
-7. Results are saved and displayed in dashboard  
+### Step 1
+
+User logs into the platform using Clerk Authentication.
+
+### Step 2
+
+User creates a new interview by entering:
+
+* Job Role
+* Job Description
+* Years of Experience
+
+### Step 3
+
+Gemini AI generates interview questions based on provided details.
+
+### Step 4
+
+User starts the interview.
+
+### Step 5
+
+The system:
+
+* Records voice responses
+* Converts speech to text
+* Tracks facial expressions
+
+### Step 6
+
+Gemini AI evaluates the answer and generates:
+
+* Score
+* Feedback
+* Suggestions
+
+### Step 7
+
+Interview results are stored in Neon PostgreSQL Database.
+
+### Step 8
+
+User can review feedback and previous interview history.
 
 ---
 
 ## 💡 Key Innovation
 
-- Combines **AI + ML + Voice + Facial Analysis**
-- Evaluates both:
-  - Technical answers
-  - Non-verbal communication (confidence)
+This project combines multiple technologies into a single interview preparation platform:
+
+* Artificial Intelligence
+* Voice Recognition
+* Facial Expression Analysis
+* Automated Evaluation
+* Real-Time Feedback
+
+Unlike traditional interview preparation tools, the platform evaluates both:
+
+### Technical Performance
+
+* Answer Quality
+* Relevance
+* Completeness
+
+### Soft Skills
+
+* Confidence
+* Facial Expressions
+* Communication Effectiveness
 
 ---
 
-## 📸 Screens
+## 📸 Application Screens
 
-- Dashboard (Interview list)
-- Interview Setup Page
-- Live Interview (Webcam + Voice)
-- Feedback Page (Score + AI Feedback)
-- Upgrade Page (Coin System)
+### Dashboard
+
+* Create Interview
+* View Previous Interviews
+
+### Interview Setup
+
+* Job Information
+* Interview Instructions
+
+### Live Interview
+
+* Webcam Monitoring
+* Voice Recording
+* AI Question Display
+
+### Feedback Page
+
+* Score Analysis
+* AI Suggestions
+* Performance Review
+
+### Upgrade Page
+
+* Coin Management
+* Premium Features
 
 ---
 
 ## ⚙️ Installation
 
+Clone the repository:
+
 ```bash
-git clone https://github.com/your-username/ai-interview-mocker.git
-cd ai-interview-mocker
+git clone https://github.com/Shravanibadabe/ai-interview.git
+```
+
+Navigate to project folder:
+
+```bash
+cd ai-interview
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
+
+Run development server:
+
+```bash
 npm run dev
-````
+```
+
+Open:
+
+```bash
+http://localhost:3000
+```
 
 ---
 
 ## 🔑 Environment Variables
 
-Create a `.env` file:
+Create a `.env` file and add:
 
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
-CLERK_SECRET_KEY=your_secret_key
+CLERK_SECRET_KEY=your_clerk_secret
+
 DATABASE_URL=your_neon_database_url
-GEMINI_API_KEY=your_gemini_key
+
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
 ---
 
 ## 🗄️ Database Schema
 
+### User Table
+
 ```sql
-User:
-- id
-- clerkId
-- coins
+id
+clerkId
+coins
+createdAt
+```
 
-MockInterview:
-- mockId
-- jobPosition
-- jobDesc
-- jobExperience
-- jsonMockResp
+### Mock Interview Table
 
-UserAnswer:
-- mockId
-- question
-- correctAnswer
-- userAnswer
-- confidence
-- mlScore
-- feedback
+```sql
+mockId
+jobPosition
+jobDesc
+jobExperience
+jsonMockResp
+createdAt
+```
+
+### User Answer Table
+
+```sql
+mockId
+question
+correctAnswer
+userAnswer
+confidence
+mlScore
+feedback
+createdAt
 ```
 
 ---
 
 ## 💰 Coin System
 
-* New users get **20 coins**
-* Each interview costs **5 coins**
-* Users can upgrade coins (demo version uses local storage / manual update)
+| Action                | Coins  |
+| --------------------- | ------ |
+| New User Registration | +20    |
+| Start Interview       | -5     |
+| Upgrade Plan          | +Coins |
+
+---
+
+## 🎯 Project Objectives
+
+* Improve interview preparation
+* Build confidence in candidates
+* Provide realistic interview simulation
+* Deliver instant AI-based feedback
+* Help students prepare for placements
 
 ---
 
 ## 🔮 Future Enhancements
 
-* Real payment integration (Razorpay)
-* Advanced emotion detection
-* Resume-based question generation
-* Performance analytics dashboard
+* Razorpay Payment Integration
+* Resume-Based Question Generation
+* Advanced Emotion Recognition
+* Detailed Analytics Dashboard
+* Multi-Language Support
+* Interview Recording Playback
+* AI Career Guidance
 
 ---
 
-## 📌 Use Case
+## 📌 Target Users
 
-* Students preparing for placements
-* Job seekers improving interview skills
-* Colleges for mock interview practice
+### Students
+
+Practice placement interviews before campus recruitment.
+
+### Freshers
+
+Improve confidence and communication skills.
+
+### Job Seekers
+
+Prepare for technical and HR interviews.
+
+### Educational Institutions
+
+Conduct mock interview training sessions.
 
 ---
 
 ## 👨‍💻 Author
 
-Developed by:
+### Shravani Badabe
 
-* **Shravani Badabe**
+📧 Email:
+[badabeshravani@gmail.com](mailto:badabeshravani@gmail.com)
+
+🔗 GitHub:
+https://github.com/Shravanibadabe
+
+💼 LinkedIn:
+https://linkedin.com/in/shravani-badabe
+
+🌐 Portfolio:
+https://shravanibadabe.netlify.app
+
+🚀 Live Demo:
+https://ai-interview-black-one.vercel.app/dashboard
 
 ---
 
 ## 📜 License
 
-This project is for educational purposes.
+This project is developed for educational and learning purposes.
 
 ---
 
-```
+### ⭐ If you found this project useful, consider giving it a star on GitHub.
